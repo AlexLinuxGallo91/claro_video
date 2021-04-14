@@ -1,6 +1,7 @@
 from json_scraping.json_scrap import JsonScraping
 from html_scraping.html_scrap import HtmlScraping
 from utils.arg_utils import ArgUtils
+from utils.json_utils import JsonUtils
 from utils import constantes_claro_video as const
 from utils.request_utils import RequestUtils
 from utils.validacion_episodios_utils import ValidacionEpisodiosUtils
@@ -25,14 +26,20 @@ def main(json_param):
     # buscamos los capitulos de cada serie por medio de web scrapping en la tabla html
     lista_result_serie = HtmlScraping.obtencion_capitulos_temporadas_por_id_serie_ag(lista_result_serie)
 
-    # validacion de lista de capitulos
+    # validacion de lista de capitulos y de url de imagenes
     for result_serie in lista_result_serie:
         result_serie.numero_total_de_capitulos = len(result_serie.lista_de_episodios)
         result_serie = ValidacionEpisodiosUtils.establecer_numero_de_capitulos_a_int(result_serie)
         result_serie = ValidacionEpisodiosUtils.obtencion_orden_total_de_temporadas_y_episodios(result_serie)
         result_serie = ValidacionEpisodiosUtils.validar_capitulos_faltantes_por_temporada(result_serie)
+        result_serie = ValidacionEpisodiosUtils.establecer_validacion_result_capitulos_faltantes(result_serie)
+        result_serie.lista_validaciones_url_imagenes_por_revisar = RequestUtils.validar_lista_url_imagenes(
+            result_serie.lista_validaciones_url_imagenes_por_revisar)
 
-    [print(result) for result in lista_result_serie]
+    # genera el json final con las validaciones finales
+    json_validacion = JsonUtils.generar_json_result(lista_result_serie)
+
+    print(json_validacion)
 
 args = ArgUtils.validar_args(sys.argv)
 main(args)

@@ -1,4 +1,4 @@
-from result_serie.result_validacion import ResultValidacion
+from result_serie.result_validacion import ResultValidacionEpisodios
 from result_serie.result_serie_encabezado import ResultSerieEncabezado
 
 class ResultSerie:
@@ -22,8 +22,8 @@ class ResultSerie:
         self.url_obtencion_data_encabezado = ''
         self.url_obtencion_data_id_serie_ag = ''
         self.url_obtencion_data_capitulos = ''
-        self.validacion_url_imagenes = ResultValidacion()
-        self.validacion_continuidad_capitulos = ResultValidacion()
+        self.lista_validaciones_url_imagenes_por_revisar = []
+        self.validacion_continuidad_capitulos = ResultValidacionEpisodios()
 
     def __str__(self):
         text = ''

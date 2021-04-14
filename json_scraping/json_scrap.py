@@ -1,6 +1,7 @@
 from utils import constantes_claro_video as const
 from utils.request_utils import RequestUtils
 from result_serie.result_serie import ResultSerie
+from result_serie.result_validacion import ResultValidacionImagen
 from result_serie.result_serie_encabezado import ResultSerieEncabezado
 from typing import List, Dict
 
@@ -34,6 +35,21 @@ class JsonScraping:
                 result_serie_con_group_id.url_obtencion_data_encabezado = const.URL_FORMADA
                 result_serie_con_group_id.nodo = const.PARAM_NODO
                 result_serie_con_group_id.region = const.PARAM_REGION
+
+                result_serie_con_group_id.lista_validaciones_url_imagenes_por_revisar.append(ResultValidacionImagen(
+                    'image_large', result_serie_con_group_id.result_serie_encabezado.image_large))
+
+                result_serie_con_group_id.lista_validaciones_url_imagenes_por_revisar.append(ResultValidacionImagen(
+                    'image_small', result_serie_con_group_id.result_serie_encabezado.image_small))
+
+                result_serie_con_group_id.lista_validaciones_url_imagenes_por_revisar.append(ResultValidacionImagen(
+                    'image_medium', result_serie_con_group_id.result_serie_encabezado.image_medium))
+
+                result_serie_con_group_id.lista_validaciones_url_imagenes_por_revisar.append(ResultValidacionImagen(
+                    'image_highlight', result_serie_con_group_id.result_serie_encabezado.image_highlight))
+
+                result_serie_con_group_id.lista_validaciones_url_imagenes_por_revisar.append(ResultValidacionImagen(
+                    'image_background', result_serie_con_group_id.result_serie_encabezado.image_background))
 
                 lista_series_con_group_id.append(result_serie_con_group_id)
 

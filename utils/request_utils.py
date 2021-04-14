@@ -1,3 +1,5 @@
+from typing import List
+from result_serie.result_validacion import ResultValidacionImagen
 import sys
 import requests
 
@@ -52,3 +54,16 @@ class RequestUtils:
             return True
         else:
             return False
+
+    @staticmethod
+    def validar_url_imagen(url_por_verificar:str):
+        return RequestUtils.la_url_es_valida(url_por_verificar) and \
+               RequestUtils.la_url_contiene_imagen(url_por_verificar)
+
+    @staticmethod
+    def validar_lista_url_imagenes(lista_url_imagenes:List[ResultValidacionImagen]):
+
+        for result in lista_url_imagenes:
+            result.validacion_correcta = RequestUtils.validar_url_imagen(result.url_por_probar)
+
+        return lista_url_imagenes

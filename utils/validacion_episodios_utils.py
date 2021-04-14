@@ -50,7 +50,6 @@ class ValidacionEpisodiosUtils:
     def validar_capitulos_faltantes_por_temporada(result_serie:ResultSerie):
 
         for temporada in result_serie.orden_total_temporadas_episodios:
-            lista_capitulos_faltantes = []
             lista_capitulos_faltantes = ValidacionEpisodiosUtils.validar_capitulos_faltantes_en_lista(
                 result_serie.orden_total_temporadas_episodios[temporada])
 
@@ -59,4 +58,18 @@ class ValidacionEpisodiosUtils:
 
         return result_serie
 
+    @staticmethod
+    def establecer_validacion_result_capitulos_faltantes(result_serie: ResultSerie):
+        msg_error = ''
+
+        if len(result_serie.orden_total_temporadas_episodios_faltantes) > 0:
+            result_serie.validacion_continuidad_capitulos.validacion_correcta = False
+            msg_error += 'Se presenta discontinuidad de episodios en la siguientes temporadas:\n'
+
+            for temporada in result_serie.orden_total_temporadas_episodios_faltantes:
+                msg_error += 'Temporada {} : {}'.format(
+                    temporada, result_serie.orden_total_temporadas_episodios_faltantes[temporada])
+
+        result_serie.validacion_continuidad_capitulos.msg_error = msg_error
+        return result_serie
 
